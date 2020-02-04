@@ -17,10 +17,15 @@ def main():
         samples = Acc_Processor.load_file(join(path, file))
         dataset.append(samples)
 
-    print(dataset)
-    print(len(dataset))
-    print(dataset[1].columns)
-    #windowed_set = Acc_Processor.windowed_view(dataset[1], 256, 128)
+
+
+    windowed_set = Acc_Processor.windowed_view(dataset[1], 1000, 250)
+    Acc_Processor.remove_pre_FOG(windowed_set[-2], 200)
+
+    Acc_Processor.extract_supervised_features(windowed_set[-2], 100)
+
+    # for window in windowed_set:
+    #     print(window)
 
     plt.clf()
     plt.plot(dataset[1][["time"]], dataset[1][["shank_x", "shank_y", "shank_z"]])
